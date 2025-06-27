@@ -1,0 +1,25 @@
+// npm install tonweb
+const TonWeb = require("tonweb");
+const { mnemonicNew, mnemonicToWalletKey } = require('ton-crypto');
+
+const tonweb = new TonWeb(new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC'));
+
+// You need your own deployer wallet (for fees)
+const deployerMnemonic = [/* your 24-word mnemonic here */];
+const recipientAddress = 'UQCSgPQN7gvW3qOcLmvzCU-Y7WQw-J1ojO3CX_cfAbwPC_0X';
+
+// Use official Jetton (TIP-3) contracts: https://github.com/ton-blockchain/token-contracts/tree/main/jetton
+// (For real use, deploy JettonRoot contract here, then mint to recipient)
+
+async function main() {
+    // 1. Prepare deployer wallet
+    const keyPair = await mnemonicToWalletKey(deployerMnemonic);
+    const wallet = tonweb.wallet.create({publicKey: keyPair.publicKey});
+    const walletAddress = await wallet.getAddress();
+    
+    // 2. Deploy Jetton Root (see official scripts or bots above)
+    // 3. Mint 1,000,000 USDT (1_000_000 * 10^6) to recipientAddress
+    // For simplicity, use a Telegram Jetton bot as above for one-off needs.
+}
+
+main();
